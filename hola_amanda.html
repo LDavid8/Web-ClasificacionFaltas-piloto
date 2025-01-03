@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hola Amanda Tsukalos</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            color: #0f0;
+            font-family: monospace;
+            margin: 0;
+            overflow: hidden;
+        }
+        #container {
+            font-size: 2em;
+            text-align: center;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+        #options {
+            margin-top: 20px;
+            text-align: center;
+        }
+        button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #0f0;
+            border: none;
+            color: #000;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #fff;
+        }
+        img {
+            margin-top: 20px;
+            max-width: 300px;
+            border: 2px solid #5cff5c;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <div id="options">
+        <p>Elige una opción:</p>
+        <button id="yesButton">Sí</button>
+        <button id="noButton">No</button>
+    </div>
+    <img id="responseImage" style="display: none;">
+    <script>
+        const container = document.getElementById('container');
+        const symbols = ['#', '*', '@', '&', '%', '$', '!', '?','w','¿','<','='];
+        const text = "H O L A - A M A N D A - T S U K A L O S";
+        const displayArray = Array.from({ length: text.length }, () => " ");
+        let currentIndex = 0;
+
+        function animateText() {
+            if (currentIndex < text.length) {
+                for (let i = 0; i < displayArray.length; i++) {
+                    if (i >= currentIndex) {
+                        displayArray[i] = symbols[Math.floor(Math.random() * symbols.length)];
+                    }
+                }
+                displayArray[currentIndex] = text[currentIndex];
+                container.textContent = displayArray.join("");
+                currentIndex++;
+                setTimeout(animateText, 130); // Velocidad más lenta
+            }
+        }
+
+        animateText();
+
+        // Manejo de botones
+        const yesButton = document.getElementById('yesButton');
+        const noButton = document.getElementById('noButton');
+        const responseImage = document.getElementById('responseImage');
+
+        yesButton.addEventListener('click', () => {
+            responseImage.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe2mXEc3AhLSohsdJpqnjol4v-vfVAf-rSXQ&s';
+            responseImage.style.display = 'block';
+        });
+
+        noButton.addEventListener('click', () => {
+            responseImage.src = 'https://pbs.twimg.com/media/FYsSURVXkAAaSxJ.jpg';
+            responseImage.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
+
