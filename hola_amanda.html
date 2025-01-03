@@ -50,7 +50,7 @@
 <body>
     <div id="container"></div>
     <div id="options">
-        <p>Elige una opción:</p>
+        <p>si o non:</p>
         <button id="yesButton">Sí</button>
         <button id="noButton">No</button>
     </div>
@@ -58,7 +58,7 @@
     <script>
         const container = document.getElementById('container');
         const symbols = ['#', '*', '@', '&', '%', '$', '!', '?','w','¿','<','='];
-        const text = "H O L A - A M A N D A - T S U K A L O S";
+        const text = "H O L A - A M A N D A (WATONA)";
         const displayArray = Array.from({ length: text.length }, () => " ");
         let currentIndex = 0;
 
@@ -72,7 +72,7 @@
                 displayArray[currentIndex] = text[currentIndex];
                 container.textContent = displayArray.join("");
                 currentIndex++;
-                setTimeout(animateText, 130); // Velocidad más lenta
+                setTimeout(animateText, 100); // Velocidad más lenta
             }
         }
 
