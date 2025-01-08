@@ -1,98 +1,255 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hola Amanda Tsukalos</title>
+    <title>Clasificación de Faltas Escolares</title>
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #000;
-            color: #0f0;
-            font-family: monospace;
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #eeeeee;
+            color: #38373d;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        header h1 {
+            color: #1e9906;
             margin: 0;
-            overflow: hidden;
         }
-        #container {
-            font-size: 2em;
-            text-align: center;
-            white-space: pre-wrap;
-            line-height: 1.5;
+        .section {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #505050;
+            border-radius: 10px;
+            background-color: #ffffff;
         }
-        #options {
-            margin-top: 20px;
-            text-align: center;
+        .section h2 {
+            color: #3dbd41;
+        }
+        select {
+            padding: 10px;
+            font-size: 14px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 600px;
+        }
+        p {
+            font-size: 14px;
+        }
+        ul {
+            margin: 10px 0;
+            padding-left: 20px;
         }
         button {
-            font-size: 1.2em;
-            padding: 10px 20px;
-            margin: 10px;
-            cursor: pointer;
-            background-color: #0f0;
+            background-color: #27a52b;
+            color: white;
             border: none;
-            color: #000;
-            font-weight: bold;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
         }
         button:hover {
-            background-color: #fff;
+            background-color: #45a049;
         }
-        img {
-            margin-top: 20px;
-            max-width: 300px;
-            border: 2px solid #5cff5c;
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #777;
         }
     </style>
+
 </head>
 <body>
-    <div id="container"></div>
-    <div id="options">
-        <p>si o non:</p>
-        <button id="yesButton">Sí</button>
-        <button id="noButton">No</button>
-    </div>
-    <img id="responseImage" style="display: none;">
-    <script>
-        const container = document.getElementById('container');
-        const symbols = ['#', '*', '@', '&', '%', '$', '!', '?','w','¿','<','='];
-        const text = "H O L A - A M A N D A (WATONA)";
-        const displayArray = Array.from({ length: text.length }, () => " ");
-        let currentIndex = 0;
+    <header>
+        <h1>Clasificación de Faltas Escolares</h1>
+    </header>
 
-        function animateText() {
-            if (currentIndex < text.length) {
-                for (let i = 0; i < displayArray.length; i++) {
-                    if (i >= currentIndex) {
-                        displayArray[i] = symbols[Math.floor(Math.random() * symbols.length)];
-                    }
-                }
-                displayArray[currentIndex] = text[currentIndex];
-                container.textContent = displayArray.join("");
-                currentIndex++;
-                setTimeout(animateText, 100); // Velocidad más lenta
+    <div class="section">
+        <h2>Categorías de Faltas</h2>
+        <p>Selecciona una categoría para ver las faltas asociadas:</p>
+        <select id="categoria-select" onchange="showFaltas()">
+            <option value="">-- Selecciona una categoría --</option>
+            <option value="categoria1">Respeto y convivencia</option>
+            <option value="categoria2">Uso de tecnología</option>
+            <option value="categoria3">Cumplimiento académico</option>
+            <option value="categoria4">Cuidado de instalaciones y medio ambiente</option>
+            <option value="categoria5">Violencia o agresión</option>
+            <option value="categoria6">Comportamiento social inadecuado</option>
+            <option value="categoria7">Conductas delictivas o peligrosas</option>
+        </select>
+    </div>
+
+    <div class="section" id="faltas-section" style="display: none;">
+        <h2>Faltas</h2>
+        <p>Selecciona una falta para ver el tipo:</p>
+        <select id="faltas-select" onchange="showTipoFalta()">
+            <option value="">-- Selecciona una falta --</option>
+        </select>
+    </div>
+
+    <div class="section" id="tipo-section" style="display: none;">
+        <h2>Detalles de la Falta</h2>
+        <p><strong>Tipo:</strong> <span id="tipo"></span></p>
+        <div id="consecuencias-section">
+            <h3>Consecuencias Aplicables</h3>
+            <div id="consecuencias"></div>
+        </div>
+    </div>
+
+    <div class="section" id="controls-section">
+        <button onclick="clearSelection()">Limpiar selección</button>
+    </div>
+
+    <footer>
+        <p>&copy; Clasificacion de Faltas al Reglamnento</p>
+    </footer>
+
+    <script>
+        const faltas = {
+            "categoria1": [
+                { text: "Estudiante le falta el respeto a compañero/a", tipo: "Leve" },
+                { text: "No respetar la mano levantada. Interrumpir las clases. Gritar en clases.", tipo: "Leve" },
+                { text: "Interrumpir a los que hablan", tipo: "Leve" },
+                { text: "Interrumpir las clases con temas no pedagógicos", tipo: "Leve" },
+                { text: "Gritar a un docente o compañero/a por tener una opinión distinta", tipo: "Grave" },
+                { text: "Reacciona inadecuadamente a la corrección de un/a funcionario/a", tipo: "Grave" },
+                { text: "Ignora situaciones de conflictos. No auxilia a otros", tipo: "Grave" },
+                { text: "Ocultar u omitir información, hechos o antecedentes en la etapa indagatoria de un proceso", tipo: "Grave" }
+            ],
+            "categoria2": [
+                { text: "Usar el celular sin consentimiento de un profesor/a o funcionario/a dentro del aula", tipo: "Leve" },
+                { text: "Mal uso del aparato tecnológico entregado con fines educativos", tipo: "Leve" },
+                { text: "Ciberacoso", tipo: "Gravísima" },
+                { text: "Grabar o tomar fotografías a cualquier miembro de la comunidad educativa sin su consentimiento", tipo: "Gravísima" }
+            ],
+            "categoria3": [
+                { text: "Hacer ruido en clases. Maquillarse u otra acción que implique no prestar atención y evitar el normal desarrollo de las clases", tipo: "Leve" },
+                { text: "Ingresa tarde después del recreo", tipo: "Leve" },
+                { text: "No cumple con deberes escolares, tareas en clases, trabajos y/o otros procedimientos de aprendizajes", tipo: "Leve" },
+                { text: "Llegar atrasada en forma constante", tipo: "Leve" },
+                { text: "Falta a clases. No trae justificativo", tipo: "Leve" },
+                { text: "Incumplir deberes escolares", tipo: "Leve" },
+                { text: "No cumplir con instrucciones o disposiciones de procedimientos y uso de maquinarias y herramientas en el trabajo escolar", tipo: "Leve" },
+                { text: "No asistir a clases entre recreos", tipo: "Grave" },
+                { text: "Copia y hace plagios con tareas escolares", tipo: "Grave" },
+                { text: "No completa sus tareas y no corrige sus debilidades", tipo: "Leve" }
+            ],
+            "categoria4": [
+                { text: "Daño a instalaciones. descuidar el medio ambiente escolar", tipo: "Leve" },
+                { text: "No cuidar los árboles, pasto, flores del establecimiento. Rayar los muros, romper vidrios, puertas, etc.", tipo: "Grave" },
+                { text: "Falta de higiene al dejar baños o camarines en mal estado", tipo: "Grave" }
+            ],
+            "categoria5": [
+                { text: "Acoso Escolar o bullying", tipo: "Gravísima" },
+                { text: "Agresión física, psicológica o moral a otro miembro de la comunidad escolar", tipo: "Gravísima" },
+                { text: "Incitar y/o participar en peleas o riñas fuera o dentro del Colegio", tipo: "Gravísima" },
+                { text: "Maltratar verbalmente a compañeras o profesores con palabras con connotación sexual", tipo: "Gravísima" },
+                { text: "Acoso o abuso sexual a cualquier miembro de la comunidad educativa", tipo: "Gravísima" },
+                { text: "Discriminar y/o denostar arbitrariamente a cualquier persona", tipo: "Gravísima" }
+            ],
+            "categoria6": [
+                { text: "Incumplimiento de las normas sociales", tipo: "Grave" },
+                { text: "Conductas de connotación sexual, tales como: tocaciones y juegos sexualizados", tipo: "Grave" }
+            ],
+            "categoria7": [
+                { text: "Hurto o robo", tipo: "Grave" },
+                { text: "Portar todo tipo de arma, utensilios u objetos cortantes", tipo: "Gravísima" },
+                { text: "Consumir, portar, distribuir, transportar, vender, promover cigarrillos y vapers", tipo: "Gravísima" }
+            ]
+        };
+        const consecuencias = {
+            "Leve": `
+                <h4>Disciplinarias:</h4>
+                <ul>
+                    <li>Observación del hecho</li>
+                    <li>Citación apoderado</li>
+                    <li>Revisión de las medidas disciplinarias adoptadas</li>
+                </ul>
+                <h4>Formativas:</h4>
+                <ul>
+                    <li>Reconocer su falta</li>
+                    <li>Diálogo pedagógico</li>
+                    <li>Firmar un compromiso asegurando que la falta no será cometida nuevamente</li>
+                </ul>
+            `,
+            "Grave": `
+                <h4>Disciplinarias:</h4>
+                <ul>
+                    <li>Observación del hecho</li>
+                    <li>Citación apoderado</li>
+                    <li>Cambio de curso</li>
+                    <li>Suspensión diferida temporal</li>
+                </ul>
+                <h4>Formativas:</h4>
+                <ul>
+                    <li>Reconocer su falta</li>
+                    <li>Conversación mediada con la persona afectada</li>
+                    <li>Firmar un compromiso asegurando que la falta no será cometida nuevamente</li>
+                    <li>Pedir disculpas públicas</li>
+                    <li>Trabajar aportando a la comunidad educativa</li>
+                    <li>Seguimiento tutorial</li>
+                </ul>
+            `,
+            "Gravísima": `
+                <h4>Disciplinarias:</h4>
+                <ul>
+                    <li>Cambio de curso</li>
+                    <li>Condicionalidad</li>
+                    <li>No renovación de matrícula</li>
+                    <li>Cancelación de matrícula</li>
+                    <li>Expulsión</li>
+                </ul>
+                <h4>Formativas:</h4>
+                <ul>
+                    <li>Reconocer su falta</li>
+                    <li>Conversación mediada con la persona afectada</li>
+                    <li>Firmar un compromiso asegurando que la falta no será cometida nuevamente</li>
+                    <li>Pedir disculpas públicas</li>
+                    <li>Ser apartado temporalmente con trabajo reparatorio</li>
+                    <li>Suspensión de presencialidad con servicio educativo desde el hogar</li>
+                    <li>Trabajar aportando a la comunidad educativa</li>
+                    <li>Seguimiento tutorial</li>
+                </ul>
+            `
+        };
+
+        function showFaltas() {
+            const category = document.getElementById('categoria-select').value;
+            const faltasSelect = document.getElementById('faltas-select');
+            faltasSelect.innerHTML = '<option value="">-- Selecciona una falta --</option>';
+            if (category) {
+                faltas[category].forEach((falta, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = falta.text;
+                    faltasSelect.appendChild(option);
+                });
+                document.getElementById('faltas-section').style.display = 'block';
+            } else {
+                document.getElementById('faltas-section').style.display = 'none';
             }
         }
-
-        animateText();
-
-        // Manejo de botones
-        const yesButton = document.getElementById('yesButton');
-        const noButton = document.getElementById('noButton');
-        const responseImage = document.getElementById('responseImage');
-
-        yesButton.addEventListener('click', () => {
-            responseImage.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe2mXEc3AhLSohsdJpqnjol4v-vfVAf-rSXQ&s';
-            responseImage.style.display = 'block';
-        });
-
-        noButton.addEventListener('click', () => {
-            responseImage.src = 'https://pbs.twimg.com/media/FYsSURVXkAAaSxJ.jpg';
-            responseImage.style.display = 'block';
-        });
+        function showTipoFalta() {
+            const category = document.getElementById('categoria-select').value;
+            const index = document.getElementById('faltas-select').value;
+            if (category && index !== "") {
+                const falta = faltas[category][index];
+                document.getElementById('tipo').textContent = falta.tipo;
+                document.getElementById('consecuencias').innerHTML = consecuencias[falta.tipo] || "";
+                document.getElementById('tipo-section').style.display = 'block';
+            }
+        }
+        function clearSelection() {
+            document.getElementById('categoria-select').value = "";
+            document.getElementById('faltas-select').innerHTML = '<option value="">-- Selecciona una falta --</option>';
+            document.getElementById('faltas-section').style.display = 'none';
+            document.getElementById('tipo-section').style.display = 'none';
+        }
     </script>
 </body>
 </html>
-
