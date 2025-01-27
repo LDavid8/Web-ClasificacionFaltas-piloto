@@ -1,0 +1,71 @@
+:root {
+    --color-primario: #2c3e50;
+    --color-secundario: #3498db;
+    --leve: #f1c40f;
+    --grave: #e67e22;
+    --gravissima: #e74c3c;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #ecf0f1;
+}
+
+header {
+    text-align: center;
+    padding: 2rem;
+    background: var(--color-primario);
+    color: white;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+}
+
+.seccion {
+    background: white;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    border-radius: 12px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.selector {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid var(--color-secundario);
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+#buscador {
+    width: 80%;
+    padding: 15px;
+    font-size: 18px;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.boton-accion {
+    background: var(--color-secundario);
+    color: white;
+    padding: 12px 25px;
+    margin: 10px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.boton-accion:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52,152,219,0.4);
+}
+
+/* Estilos dinámicos para tipos de falta */
+.tipo-leve { color: var(--leve); border-left: 4px solid var(--leve); padding-left: 10px; }
+.tipo-grave { color: var(--grave); border-left: 4px solid var(--grave); padding-left: 10px; }
+.tipo-gravissima { color: var(--gravissima); border-left: 4px solid var(--gravissima); padding-left: 10px; }

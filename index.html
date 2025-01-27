@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Inteligente de Faltas Escolares</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>🚨 Gestor de Faltas Disciplinarias</h1>
+        <input type="text" id="buscador" placeholder="🔍 Buscar falta por nombre..." list="lista-faltas">
+        <datalist id="lista-faltas"></datalist>
+    </header>
+
+    <div class="seccion">
+        <h2>📝 Registro del Caso</h2>
+        <input type="text" id="nombre-estudiante" placeholder="Nombre del estudiante">
+        <textarea id="observaciones" placeholder="Observaciones adicionales..."></textarea>
+    </div>
+
+    <div class="seccion">
+        <h2>📂 Categorías</h2>
+        <select id="selector-categorias" class="selector"></select>
+    </div>
+
+    <div class="seccion">
+        <h2>⚖️ Faltas</h2>
+        <select id="selector-faltas" class="selector"></select>
+    </div>
+
+    <div class="seccion" id="detalles">
+        <h2>📄 Detalles de la Falta</h2>
+        <div id="contenido-detalles"></div>
+        <button onclick="generarPDF()" class="boton-accion">🖨️ Generar Reporte</button>
+        <button onclick="limpiarTodo()" class="boton-accion">🧹 Reiniciar</button>
+    </div>
+
+    <div class="seccion">
+        <h2>📊 Estadísticas</h2>
+        <canvas id="grafico-estadisticas"></canvas>
+    </div>
+
+    <!-- Dependencias -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
